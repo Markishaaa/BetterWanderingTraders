@@ -1,0 +1,5 @@
+name: BetterWanderingTraders
+version: 1.0
+author: markisha
+main: markisha.trader.Main
+api-version: 1.19

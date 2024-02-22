@@ -1,18 +1,18 @@
 package markisha.headDbApi;
 
+import com.google.gson.JsonObject;
+
 public class HeadData {
 
 	private String name;
 	private String uuid;
+	private JsonObject valueDecoded;
 
-	public HeadData() {
-		super();
-	}
-
-	public HeadData(String name, String uuid) {
+	public HeadData(String name, String uuid, JsonObject valueDecoded) {
 		super();
 		this.name = name;
 		this.uuid = uuid;
+		this.valueDecoded = valueDecoded;
 	}
 
 	public String getName() {
@@ -31,11 +31,17 @@ public class HeadData {
 		this.uuid = uuid;
 	}
 
+	public JsonObject getValueDecoded() {
+		return valueDecoded;
+	}
+
+	public void setValueDecoded(JsonObject valueDecoded) {
+		this.valueDecoded = valueDecoded;
+	}
+
 	@Override
 	public String toString() {
 		return name;
 	}
 
-	
-	
 }

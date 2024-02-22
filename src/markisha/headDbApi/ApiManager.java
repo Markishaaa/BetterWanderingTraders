@@ -63,8 +63,9 @@ public class ApiManager {
 
 				String name = jsonItem.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
 				String uuid = jsonItem.getAsJsonObject().getAsJsonPrimitive("uuid").getAsString();
+				JsonObject valueDecoded = jsonItem.getAsJsonObject().getAsJsonObject("valueDecoded");
 
-				HeadData headData = new HeadData(name, uuid);
+				HeadData headData = new HeadData(name, uuid, valueDecoded);
 
 				headList.add(headData);
 			}
@@ -91,10 +92,10 @@ public class ApiManager {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(ApiManager.getBlockList());
-		System.out.println(ApiManager.getElectronicsList());
-		System.out.println(ApiManager.getLetterList());
-		System.out.println(ApiManager.getFoodList());
+		System.out.println(ApiManager.getBlockList().size());
+		System.out.println(ApiManager.getElectronicsList().size());
+		System.out.println(ApiManager.getLetterList().size());
+		System.out.println(ApiManager.getFoodList().size());
 	}
 
 }

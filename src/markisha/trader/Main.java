@@ -3,12 +3,13 @@ package markisha.trader;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import markisha.events.CustomWanderingTrader;
+
 public class Main extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		loadConfig();
-		
+		getServer().getPluginManager().registerEvents(new CustomWanderingTrader(), this);
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[BetterWanderingTraders]: Plugin enabled!");
 	}
 	
@@ -16,10 +17,5 @@ public class Main extends JavaPlugin {
 	public void onDisable() {
 		getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[BetterWanderingTraders]: Plugin disabled!");
 	}
-	
-	private void loadConfig() {
-        getConfig().options().copyDefaults(false);
-        saveConfig();
-    }
 	
 }

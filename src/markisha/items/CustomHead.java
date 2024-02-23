@@ -73,25 +73,25 @@ public class CustomHead {
 
 		return uniqueRandomNumbers;
 	}
-	
+
 	private ItemStack makeHead(HeadData headData, ChatColor textColor) {
-        PlayerProfile profile =  Bukkit.createPlayerProfile(UUID.fromString(headData.getUuid()), headData.getName());
-        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta meta = (SkullMeta) head.getItemMeta();
-        PlayerTextures textures = profile.getTextures();
-        
+		PlayerProfile profile = Bukkit.createPlayerProfile(UUID.fromString(headData.getUuid()), headData.getName());
+		ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+		SkullMeta meta = (SkullMeta) head.getItemMeta();
+		PlayerTextures textures = profile.getTextures();
+
 		try {
 			URL url = new URL(headData.getTextureUrl());
 			textures.setSkin(url);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-        
-        profile.setTextures(textures);
-        meta.setOwnerProfile(profile);
-        meta.setDisplayName(textColor + headData.getName());
-        head.setItemMeta(meta);
-        return head;
-    }
+
+		profile.setTextures(textures);
+		meta.setOwnerProfile(profile);
+		meta.setDisplayName(textColor + headData.getName());
+		head.setItemMeta(meta);
+		return head;
+	}
 
 }

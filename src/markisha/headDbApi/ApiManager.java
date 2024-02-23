@@ -19,12 +19,12 @@ public class ApiManager {
 	private static List<HeadData> electronicsList = new ArrayList<>();
 	private static List<HeadData> letterList = new ArrayList<>();
 	private static List<HeadData> foodList = new ArrayList<>();
-	
+
 	static {
-	    fetchData("blocks", blockList);
-	    fetchData("electronics", electronicsList);
-	    fetchData("letters", letterList);
-	    fetchData("food", foodList);
+		fetchData("blocks", blockList);
+		fetchData("electronics", electronicsList);
+		fetchData("letters", letterList);
+		fetchData("food", foodList);
 	}
 
 	public static void fetchData(String category, List<HeadData> headList) {
@@ -63,12 +63,9 @@ public class ApiManager {
 
 				String name = jsonItem.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
 				String uuid = jsonItem.getAsJsonObject().getAsJsonPrimitive("uuid").getAsString();
-				
+
 				String textureUrl = jsonItem.getAsJsonObject().getAsJsonObject("valueDecoded")
-						.getAsJsonObject("textures")
-						.getAsJsonObject("SKIN")
-						.getAsJsonPrimitive("url")
-						.getAsString();
+						.getAsJsonObject("textures").getAsJsonObject("SKIN").getAsJsonPrimitive("url").getAsString();
 
 				HeadData headData = new HeadData(name, uuid, textureUrl);
 

@@ -17,11 +17,11 @@ import markisha.items.CustomHead;
 public class CustomWanderingTrader implements Listener {
 
 	private CustomHead ch;
-	
+
 	public CustomWanderingTrader() {
 		ch = new CustomHead();
 	}
-	
+
 	@EventHandler
 	public void onTraderSpawn(CreatureSpawnEvent event) {
 		if (event.getEntityType() == EntityType.WANDERING_TRADER) {
@@ -33,16 +33,16 @@ public class CustomWanderingTrader implements Listener {
 	private void setupCustomTrades(WanderingTrader trader) {
 		List<ItemStack> heads = ch.getHeads();
 		List<MerchantRecipe> trades = new ArrayList<>();
-		
+
 		ItemStack price = new ItemStack(Material.EMERALD, 2);
-		
+
 		for (ItemStack item : heads) {
 			MerchantRecipe customTrade = new MerchantRecipe(item, 15);
 			customTrade.addIngredient(price);
-			
+
 			trades.add(customTrade);
 		}
-		
+
 		trader.setRecipes(trades);
 	}
 

@@ -1,8 +1,8 @@
 package markisha.items;
 
-import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,13 +11,13 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.profile.PlayerProfile;
+import org.bukkit.profile.PlayerTextures;
 
 import markisha.constants.Categories;
 import markisha.headDbApi.ApiManager;
@@ -55,7 +55,7 @@ public class CustomHead {
 		Set<Integer> uniqueRandomNumbers = generateUniqueRandomNumbers(amount, headList.size());
 
 		for (Integer i : uniqueRandomNumbers) {
-			skullList.add(setHead(headList.get(i), textColor));
+			skullList.add(makeHead(headList.get(i), textColor));
 		}
 
 		return skullList;
@@ -73,31 +73,25 @@ public class CustomHead {
 
 		return uniqueRandomNumbers;
 	}
-
-	private ItemStack setHead(HeadData headData, ChatColor textColor) {
-		ItemStack playerHead = new ItemStack(Material.PLAYER_HEAD);
-		ItemMeta itemMeta = playerHead.getItemMeta();
-
-		GameProfile profile = new GameProfile(UUID.fromString(headData.getUuid()), null);
-
-		byte[] encodedData = Base64.getEncoder().encode(headData.getValueDecoded().toString().getBytes());
-		profile.getProperties().put("textures", new Property("textures", new String(encodedData)));
-		Field profileField = null;
-
+	
+	private ItemStack makeHead(HeadData headData, ChatColor textColor) {
+        PlayerProfile profile =  Bukkit.createPlayerProfile(UUID.fromString(headData.getUuid()), headData.getName());
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta meta = (SkullMeta) head.getItemMeta();
+        PlayerTextures textures = profile.getTextures();
+        
 		try {
-			profileField = itemMeta.getClass().getDeclaredField("profile");
-			profileField.setAccessible(true);
-			profileField.set(itemMeta, profile);
-		} catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e1) {
-			e1.printStackTrace();
+			URL url = new URL(headData.getTextureUrl());
+			textures.setSkin(url);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
 		}
-
-		itemMeta.setDisplayName(textColor + headData.getName());
-		
-
-		playerHead.setItemMeta(itemMeta);
-
-		return playerHead;
-	}
+        
+        profile.setTextures(textures);
+        meta.setOwnerProfile(profile);
+        meta.setDisplayName(textColor + headData.getName());
+        head.setItemMeta(meta);
+        return head;
+    }
 
 }

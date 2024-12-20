@@ -31,7 +31,7 @@ public class CustomWanderingTrader implements Listener {
 	}
 
 	private void setupCustomTrades(WanderingTrader trader) {
-		List<ItemStack> heads = ch.getHeads();
+		List<ItemStack> heads = ch.getHeads(4);
 		List<MerchantRecipe> trades = new ArrayList<>();
 
 		ItemStack price = new ItemStack(Material.EMERALD, 2);
